@@ -11,7 +11,7 @@ I Need:
 # Plan
 [X] - Build a Speech recognition program (ex: a program that transform speech into words) (Start with English then another language)
 
-[X] - Build a program that translate written words into another language using machine learning (must understand the context)
+[x] - Build a program that translate written words into another language using machine learning (must understand the context)
 
 [ ] - Build a program that read text
 
