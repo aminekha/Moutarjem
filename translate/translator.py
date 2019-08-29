@@ -1,0 +1,22 @@
+"""
+This file will translate any text from english to french
+"""
+import torch
+import fairseq
+
+def fairseq_translation(text_to_translate):
+    # List available models
+    torch.hub.list('pytorch/fairseq')  # [..., 'transformer.wmt16.en-de', ... ]
+
+    # Load a transformer trained on WMT'16 En-De
+    en2de = torch.hub.load('pytorch/fairseq', 'transformer.wmt14.en-fr', tokenizer='moses', bpe='subword_nmt')
+
+    # The underlying model is available under the *models* attribute
+    assert isinstance(en2de.models[0], fairseq.models.transformer.TransformerModel)
+
+    # Translate a sentence
+    # text_to_translate = "artificial intelligence is the new electricity."
+    # text = input("> ")
+    print("\nTranslating: {}".format(text_to_translate))
+    output = en2de.translate(text_to_translate)
+    return output
