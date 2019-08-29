@@ -9,8 +9,12 @@ I Need:
 - Imitating voice (deep voice)
 
 # Plan
-[ ] - Build a Speech recognition program (ex: a program that transform speech into words) (Start with English then another language)
-[ ] - Build a program that translate written words into another language using machine learning (must understand the context)
+[X] - Build a Speech recognition program (ex: a program that transform speech into words) (Start with English then another language)
+
+[X] - Build a program that translate written words into another language using machine learning (must understand the context)
+
 [ ] - Build a program that read text
+
 [ ] - Build a deep voice program that mimic voices.
+
 [ ] - Build a program that takes user's voice as input and read text with the user's voice.
