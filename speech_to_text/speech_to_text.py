@@ -34,7 +34,7 @@ def recorded_speech_recognition(audio_file):
 # Record and recognize using microphone
 def real_time_recognition():
     # Credit: https://github.com/frozenparadox99/real-time-speech-recognition/blob/master/speechRec.ipynb
-
+    r = sr.Recognizer() 
     mic_list = sr.Microphone.list_microphone_names() 
     # print the list of available mics
     print(mic_list)
