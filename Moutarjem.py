@@ -25,6 +25,7 @@ parser.add_argument("--low_mem", action="store_true", help=\
 parser.add_argument("--no_sound", action="store_true", help=\
     "If True, audio won't be played.")
 args = parser.parse_args()
+print('Arguments are: ', args)
 print_args(args, parser)
 if not args.no_sound:
         import sounddevice as sd
@@ -41,4 +42,4 @@ text = fairseq_translation(recorded_voice)
 print(text)
 
 # Read the translated text using the original voice
-voice_cloning(args, audio_path, text)
+voice_cloning(audio_path, text, **vars(args))

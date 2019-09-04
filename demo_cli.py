@@ -10,8 +10,7 @@ import argparse
 import torch
 import sys
 
-
-def voice_cloning(audio_file, text, args = []):
+def voice_cloning(audio_file, text, args):
     ## Print some environment information (for debugging purposes)
     print("Running a test of your configuration...\n")
     if not torch.cuda.is_available():
@@ -93,8 +92,8 @@ def voice_cloning(audio_file, text, args = []):
     while True:
         try:
             # Get the reference audio filepath
-            message = "Reference voice: enter an audio filepath of a voice to be cloned (mp3, " \
-                      "wav, m4a, flac, ...):\n"
+            # message = "Reference voice: enter an audio filepath of a voice to be cloned (mp3, " \
+            #           "wav, m4a, flac, ...):\n"
             # in_fpath = Path(input(message).replace("\"", "").replace("\'", ""))
             in_fpath = Path(audio_file.replace("\"", "").replace("\'", ""))
             
@@ -145,10 +144,10 @@ def voice_cloning(audio_file, text, args = []):
             # pad it.
             generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
             
-            # Play the audio (non-blocking)
-            if not args.no_sound:
-                sd.stop()
-                sd.play(generated_wav, synthesizer.sample_rate)
+            # # Play the audio (non-blocking)
+            # if not args.no_sound:
+            #     sd.stop()
+            #     sd.play(generated_wav, synthesizer.sample_rate)
                 
             # Save it on the disk
             fpath = "demo_output_%02d.wav" % num_generated
