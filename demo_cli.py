@@ -12,11 +12,6 @@ import sys
 
 
 def voice_cloning(audio_file, text, args = []):
-    
-    if not args.no_sound:
-        import sounddevice as sd
-        
-    
     ## Print some environment information (for debugging purposes)
     print("Running a test of your configuration...\n")
     if not torch.cuda.is_available():

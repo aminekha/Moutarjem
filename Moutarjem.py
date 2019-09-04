@@ -26,7 +26,8 @@ parser.add_argument("--no_sound", action="store_true", help=\
     "If True, audio won't be played.")
 args = parser.parse_args()
 print_args(args, parser)
-
+if not args.no_sound:
+        import sounddevice as sd
 
 
 # Transform speech to text
