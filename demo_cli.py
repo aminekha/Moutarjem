@@ -11,7 +11,7 @@ import torch
 import sys
 
 
-def voice_cloning(args = []):
+def voice_cloning(args = [], audio_file, text):
     
     if not args.no_sound:
         import sounddevice as sd
@@ -100,7 +100,8 @@ def voice_cloning(args = []):
             # Get the reference audio filepath
             message = "Reference voice: enter an audio filepath of a voice to be cloned (mp3, " \
                       "wav, m4a, flac, ...):\n"
-            in_fpath = Path(input(message).replace("\"", "").replace("\'", ""))
+            # in_fpath = Path(input(message).replace("\"", "").replace("\'", ""))
+            in_fpath = Path(audio_file.replace("\"", "").replace("\'", ""))
             
             
             ## Computing the embedding
@@ -123,7 +124,9 @@ def voice_cloning(args = []):
             
             
             ## Generating the spectrogram
-            text = input("Write a sentence (+-20 words) to be synthesized:\n")
+            # text = input("Write a sentence (+-20 words) to be synthesized:\n")
+            print('\n\nThe text to convert to speech: ')
+            text = text
             
             # The synthesizer works in batch, so you need to put your data in a list or numpy array
             texts = [text]

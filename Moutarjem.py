@@ -40,4 +40,4 @@ text = fairseq_translation(recorded_voice)
 print(text)
 
 # Read the translated text using the original voice
-voice_cloning(args)
+voice_cloning(args, audio_path, text)
