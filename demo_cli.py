@@ -11,33 +11,29 @@ import torch
 import sys
 
 
-def voice_cloning(audio_path, text_to_read):
+if __name__ == '__main__':
     ## Info & args
-    # parser = argparse.ArgumentParser(
-    #     formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    # )
-    # parser.add_argument("-e", "--enc_model_fpath", type=Path, 
-    #                     default="encoder/saved_models/pretrained.pt",
-    #                     help="Path to a saved encoder")
-    # parser.add_argument("-s", "--syn_model_dir", type=Path, 
-    #                     default="synthesizer/saved_models/logs-pretrained/",
-    #                     help="Directory containing the synthesizer model")
-    # parser.add_argument("-v", "--voc_model_fpath", type=Path, 
-    #                     default="vocoder/saved_models/pretrained/pretrained.pt",
-    #                     help="Path to a saved vocoder")
-    # parser.add_argument("--low_mem", action="store_true", help=\
-    #     "If True, the memory used by the synthesizer will be freed after each use. Adds large "
-    #     "overhead but allows to save some GPU memory for lower-end GPUs.")
-    # parser.add_argument("--no_sound", action="store_true", help=\
-    #     "If True, audio won't be played.")
-    # args = parser.parse_args()
-    # print_args(args, parser)
-    # if not args.no_sound:
-    import sounddevice as sd
-    enc_model_fpath = "encoder/saved_models/pretrained.pt"
-    syn_model_dir = "synthesizer/saved_models/logs-pretrained/"
-    voc_model_fpath = "vocoder/saved_models/pretrained/pretrained.pt"
-    no_sound = True
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument("-e", "--enc_model_fpath", type=Path, 
+                        default="encoder/saved_models/pretrained.pt",
+                        help="Path to a saved encoder")
+    parser.add_argument("-s", "--syn_model_dir", type=Path, 
+                        default="synthesizer/saved_models/logs-pretrained/",
+                        help="Directory containing the synthesizer model")
+    parser.add_argument("-v", "--voc_model_fpath", type=Path, 
+                        default="vocoder/saved_models/pretrained/pretrained.pt",
+                        help="Path to a saved vocoder")
+    parser.add_argument("--low_mem", action="store_true", help=\
+        "If True, the memory used by the synthesizer will be freed after each use. Adds large "
+        "overhead but allows to save some GPU memory for lower-end GPUs.")
+    parser.add_argument("--no_sound", action="store_true", help=\
+        "If True, audio won't be played.")
+    args = parser.parse_args()
+    print_args(args, parser)
+    if not args.no_sound:
+        import sounddevice as sd
         
     
     ## Print some environment information (for debugging purposes)
@@ -62,16 +58,16 @@ def voice_cloning(audio_path, text_to_read):
     
     ## Load the models one by one.
     print("Preparing the encoder, the synthesizer and the vocoder...")
-    encoder.load_model(enc_model_fpath)
-    synthesizer = Synthesizer(syn_model_dir.join("taco_pretrained"), low_mem=False)
-    vocoder.load_model(voc_model_fpath)
+    encoder.load_model(args.enc_model_fpath)
+    synthesizer = Synthesizer(args.syn_model_dir.joinpath("taco_pretrained"), low_mem=args.low_mem)
+    vocoder.load_model(args.voc_model_fpath)
     
     
     ## Run a test
     print("Testing your configuration with small inputs.")
     # Forward an audio waveform of zeroes that lasts 1 second. Notice how we can get the encoder's
     # sampling rate, which may differ.
-    # If you're unfamiliar with digital audio, know that it is encoded as an array of floats
+    # If you're unfamiliar with digital audio, know that it is encoded as an array of floats 
     # (or sometimes integers, but mostly floats in this projects) ranging from -1 to 1.
     # The sampling rate is the number of values (samples) recorded per second, it is set to
     # 16000 for the encoder. Creating an array of length <sampling_rate> will always correspond 
@@ -123,7 +119,7 @@ def voice_cloning(audio_path, text_to_read):
             # Get the reference audio filepath
             message = "Reference voice: enter an audio filepath of a voice to be cloned (mp3, " \
                       "wav, m4a, flac, ...):\n"
-            in_fpath = Path(audio_path.replace("\"", "").replace("\'", ""))
+            in_fpath = Path(input(message).replace("\"", "").replace("\'", ""))
             
             
             ## Computing the embedding
@@ -146,7 +142,7 @@ def voice_cloning(audio_path, text_to_read):
             
             
             ## Generating the spectrogram
-            text = text_to_read
+            text = input("Write a sentence (+-20 words) to be synthesized:\n")
             
             # The synthesizer works in batch, so you need to put your data in a list or numpy array
             texts = [text]
@@ -171,7 +167,7 @@ def voice_cloning(audio_path, text_to_read):
             generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
             
             # Play the audio (non-blocking)
-            if no_sound == True:
+            if not args.no_sound:
                 sd.stop()
                 sd.play(generated_wav, synthesizer.sample_rate)
                 
@@ -187,4 +183,3 @@ def voice_cloning(audio_path, text_to_read):
         except Exception as e:
             print("Caught exception: %s" % repr(e))
             print("Restarting\n")
-        
