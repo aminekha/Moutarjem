@@ -11,7 +11,7 @@ import torch
 import sys
 
 
-def voice_cloning(args = [], audio_file, text):
+def voice_cloning(audio_file, text, args = []):
     
     if not args.no_sound:
         import sounddevice as sd
