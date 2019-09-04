@@ -10,7 +10,7 @@ import argparse
 import torch
 import sys
 
-def voice_cloning(audio_file, text, args):
+def voice_cloning(audio_file, text, enc_model_fpath, syn_model_dir, voc_model_fpath, low_mem):
     ## Print some environment information (for debugging purposes)
     print("Running a test of your configuration...\n")
     if not torch.cuda.is_available():
@@ -33,9 +33,9 @@ def voice_cloning(audio_file, text, args):
     
     ## Load the models one by one.
     print("Preparing the encoder, the synthesizer and the vocoder...")
-    encoder.load_model(args.enc_model_fpath)
-    synthesizer = Synthesizer(args.syn_model_dir.joinpath("taco_pretrained"), low_mem=args.low_mem)
-    vocoder.load_model(args.voc_model_fpath)
+    encoder.load_model(enc_model_fpath)
+    synthesizer = Synthesizer(syn_model_dir.joinpath("taco_pretrained"), low_mem=low_mem)
+    vocoder.load_model(voc_model_fpath)
     
     
     ## Run a test
