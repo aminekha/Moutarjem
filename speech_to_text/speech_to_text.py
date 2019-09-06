@@ -11,7 +11,7 @@ def recorded_speech_recognition(audio_file):
     
     # use the audio file as the audio source 
     
-    r = sr.Recognizer(language='de-DE') 
+    r = sr.Recognizer() 
     
     with sr.AudioFile(audio_file) as source: 
         #reads the audio file. Here we use record instead of 
@@ -19,7 +19,7 @@ def recorded_speech_recognition(audio_file):
         audio = r.record(source)
     
     try: 
-        transcribed_text = r.recognize_google(audio)
+        transcribed_text = r.recognize_google(audio, language='de-DE')
         print("The audio file says: " + transcribed_text) 
         return transcribed_text
     
