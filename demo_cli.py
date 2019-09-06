@@ -119,7 +119,7 @@ def voice_cloning(audio_file, text, enc_model_fpath, syn_model_dir, voc_model_fp
             
             ## Generating the spectrogram
             # text = input("Write a sentence (+-20 words) to be synthesized:\n")
-            print('\n\nThe text to convert to speech: ')
+            print('\n\nThe text to convert to speech: ', text)
             text = text
             
             # The synthesizer works in batch, so you need to put your data in a list or numpy array

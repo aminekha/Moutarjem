@@ -11,7 +11,7 @@ def recorded_speech_recognition(audio_file):
     
     # use the audio file as the audio source 
     
-    r = sr.Recognizer() 
+    r = sr.Recognizer(language='de-DE') 
     
     with sr.AudioFile(audio_file) as source: 
         #reads the audio file. Here we use record instead of 

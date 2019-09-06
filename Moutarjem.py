@@ -33,7 +33,7 @@ if not args.no_sound:
 
 # Transform speech to text
 
-filename = "LDC93S1.wav"
+filename = "auf_widersehen.wav"
 audio_path = os.path.join('data', filename)
 recorded_voice = recorded_speech_recognition(audio_path)
 
