@@ -49,7 +49,7 @@ def real_time_recognition():
         audio = r.listen(source) 
             
         try: 
-            text = r.recognize_google(audio) 
+            text = r.recognize_google(audio, language='de-DE') 
             print ("you said: " ,text )
             return text
         

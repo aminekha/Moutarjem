@@ -1,4 +1,4 @@
-from speech_to_text.speech_to_text import recorded_speech_recognition
+from speech_to_text.speech_to_text import recorded_speech_recognition, real_time_recognition
 from translate.translator import fairseq_translation
 from demo_cli import voice_cloning
 import os
@@ -35,7 +35,8 @@ if not args.no_sound:
 
 filename = "auf_widersehen.wav"
 audio_path = os.path.join('data', filename)
-recorded_voice = recorded_speech_recognition(audio_path)
+# recorded_voice = recorded_speech_recognition(audio_path)
+recorded_voice = real_time_recognition()
 
 # Translate the text
 text = fairseq_translation(recorded_voice)
