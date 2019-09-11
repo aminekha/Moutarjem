@@ -24,6 +24,8 @@ parser.add_argument("--low_mem", action="store_true", help=\
     "overhead but allows to save some GPU memory for lower-end GPUs.")
 parser.add_argument("--no_sound", action="store_true", help=\
     "If True, audio won't be played.")
+parser.add_argument("--record", action="store_true", help=\
+    "If True, audio will be recorded from the microphone.")
 args = parser.parse_args()
 
 print_args(args, parser)
@@ -35,8 +37,11 @@ if not args.no_sound:
 
 filename = "auf_widersehen.wav"
 audio_path = os.path.join('data', filename)
-# recorded_voice = recorded_speech_recognition(audio_path)
-recorded_voice = real_time_recognition()
+
+if (args.record):
+    recorded_voice = real_time_recognition()
+else:
+    recorded_voice = recorded_speech_recognition(audio_path)
 
 # Translate the text
 text = fairseq_translation(recorded_voice)

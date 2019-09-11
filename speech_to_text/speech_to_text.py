@@ -37,10 +37,10 @@ def real_time_recognition():
     r = sr.Recognizer() 
     mic_list = sr.Microphone.list_microphone_names() 
     # print the list of available mics
-    print(mic_list)
+    print("\nAvailable Mics: ", mic_list)
     sample_rate=48000
     chunk_size=4096
-    with sr.Microphone(device_index = 0, sample_rate = sample_rate,  chunk_size = chunk_size) as source: 
+    with sr.Microphone(sample_rate = sample_rate,  chunk_size = chunk_size) as source: 
         #wait for a second to let the recognizer adjust the  
         #energy threshold based on the surrounding noise level 
         r.adjust_for_ambient_noise(source) 
